@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket server</title>
+</head>
+<style>
+    p {
+        text-align: center;
+    }
+
+    form {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+
+<body>
+    <p>Welcome to the socket server</p>
+    <form id="form">
+        <input type="text" placeholder="Enter peer id" id="inp">
+        <input type="submit">
+    </form>
+
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    let form = document.querySelector('form')
+    let roomId = generateRoomId()
+    const peerId = generateUUID()
+    console.log(roomId)
+    console.log(peerId)
+
+    const socket = io.connect('ws://localhost:8000');
+
+    socket.emit('create room', roomId)
+
+    socket.on('joined peer', (peerId) => {
+        console.log(`${peerId} has joined`)
+    })
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault()
+        let inp = document.getElementById('inp')
+        let roomNo = inp.value
+        socket.emit('join peer', roomNo, peerId)
+
+    })
+
+    function generateRoomId() {
+        return Math.floor(100000 + Math.random() * 900000)
+    }
+
+    function generateUUID() {
+        return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+            (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+        );
+    }
+
+</script>
+
+</html>
