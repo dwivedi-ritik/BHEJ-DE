@@ -4,8 +4,8 @@ import JoinRoom from "./components/JoinRoom"
 import Clients from "./components/Clients"
 import Footer from "./components/Footer"
 import Features from "./components/Features"
+import { useEffect } from "react"
 function App() {
-
   return (
     <div className="App h-screen flex flex-col justify-between">
       <div>
