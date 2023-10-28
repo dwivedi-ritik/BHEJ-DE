@@ -3,6 +3,7 @@ import RoomDetails from "./components/RoomDetails"
 import JoinRoom from "./components/JoinRoom"
 import Clients from "./components/Clients"
 import Footer from "./components/Footer"
+import Features from "./components/Features"
 function App() {
 
   return (
@@ -15,6 +16,7 @@ function App() {
         </div>
         <div className="px-3 md:px-6  grid grid-cols-1 my-3">
           <Clients></Clients>
+          <Features></Features>
         </div>
       </div>
       <Footer></Footer>
