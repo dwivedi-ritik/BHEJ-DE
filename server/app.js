@@ -1,5 +1,5 @@
 const app = require('express')()
-const server = require('http').createServer(app);
+
 const cors = require('cors')
 
 // const { generateUUID } = require("./utils")
@@ -11,12 +11,11 @@ const io = new Server(server, {
 });
 
 
-const PORT = process.env.PORT || 4000
+const PORT = process.env.PORT || 8000
 
 app.use(cors())
 
 app.get('/', (req, res) => {
-    // res.sendFile(__dirname + '/client/index.html');
     res.json({ "status": "running" })
 });
 
@@ -47,7 +46,12 @@ io.on('connection', (socket) => {
 
 });
 
-app.listen(PORT, () => {
-    console.log(`API listening on PORT ${PORT} `)
-})
+// server.listen(PORT, () => {
+//     console.log(`listening on *:${PORT} `);
+// });
 
+app.listen(PORT, () => {
+    console.log(`listening on *:${PORT} `);
+});
+
+module.exports = app
