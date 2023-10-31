@@ -11,12 +11,13 @@ const io = new Server(server, {
 });
 
 
-// const PORT = process.env.PORT || 8000
+const PORT = process.env.PORT || 4000
 
 app.use(cors())
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/client/index.html');
+    // res.sendFile(__dirname + '/client/index.html');
+    res.json({ "status": "running" })
 });
 
 let clients = []
@@ -46,8 +47,7 @@ io.on('connection', (socket) => {
 
 });
 
-// server.listen(PORT, () => {
-//     console.log(`listening on *:${PORT} `);
-// });
-
+app.listen(PORT, () => {
+    console.log(`API listening on PORT ${PORT} `)
+})
 
