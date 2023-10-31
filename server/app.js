@@ -2,7 +2,7 @@ const app = require('express')()
 const server = require('http').createServer(app);
 const cors = require('cors')
 
-const { generateUUID } = require("./utils")
+// const { generateUUID } = require("./utils")
 const { Server } = require("socket.io");
 const io = new Server(server, {
     cors: {
@@ -11,7 +11,7 @@ const io = new Server(server, {
 });
 
 
-const PORT = process.env.PORT || 8000
+// const PORT = process.env.PORT || 8000
 
 app.use(cors())
 
@@ -46,8 +46,8 @@ io.on('connection', (socket) => {
 
 });
 
-server.listen(PORT, () => {
-    console.log(`listening on *:${PORT} `);
-});
+// server.listen(PORT, () => {
+//     console.log(`listening on *:${PORT} `);
+// });
 
 
