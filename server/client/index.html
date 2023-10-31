@@ -24,11 +24,17 @@
         <input type="text" placeholder="Enter peer id" id="inp">
         <input type="submit">
     </form>
+    <input class="op" type="button" value="Emit messages joined"></input>
+    <input class="host" type="button" value="Host"></input>
 
 </body>
 <script src="/socket.io/socket.io.js"></script>
 <script>
     let form = document.querySelector('form')
+    let emitMessage = document.querySelector(".op")
+    let host = document.querySelector(".host")
+
+
     let roomId = generateRoomId()
     const peerId = generateUUID()
     console.log(roomId)
@@ -36,19 +42,36 @@
 
     const socket = io.connect('ws://localhost:8000');
 
-    socket.emit('create room', roomId)
-
-    socket.on('joined peer', (peerId) => {
-        console.log(`${peerId} has joined`)
-    })
-
     form.addEventListener('submit', (e) => {
         e.preventDefault()
         let inp = document.getElementById('inp')
         let roomNo = inp.value
-        socket.emit('join peer', roomNo, peerId)
+        socket.emit('join room', roomNo, peerId)
 
     })
+
+
+    socket.emit('create room', (roomId))
+    socket.emit('join room', roomId, peerId)
+
+
+
+    socket.on("user join room", (roomIdFetched, peerId) => {
+        roomId = roomIdFetched
+        console.log(peerId + " has joined our room")
+    })
+
+    socket.on("group message", (msg) => {
+        console.log(msg)
+    })
+
+    emitMessage.addEventListener('click', () => {
+        socket.emit('share message in room', roomId, 'hello from ' + peerId)
+    })
+
+
+
+
 
     function generateRoomId() {
         return Math.floor(100000 + Math.random() * 900000)
